@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FuCoLla Tech – Inclusión Digital con Identidad</title>
+  <meta name="description" content="FuCoLla Tech conecta oportunidades tecnológicas con comunidades rurales y originarias. Inspirado en el Qhapaq Ñan.">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold:    #C9A84C;
+      --goldLt:  #E8C97A;
+      --goldDm:  #7A6130;
+      --deep:    #0D0A06;
+      --surface: #1A1208;
+      --surf2:   #231A0E;
+      --green:   #2A6B3C;
+      --greenLt: #4CAF6A;
+      --text:    #F0E8D5;
+      --muted:   #A8957A;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--deep);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* GEO BG */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.04;
+      background-image:
+        repeating-linear-gradient(60deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%),
+        repeating-linear-gradient(-60deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%);
+      background-size: 40px 70px;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 48px;
+      background: rgba(13,10,6,0.92);
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+      backdrop-filter: blur(8px);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 700;
+      letter-spacing: 2px; color: var(--gold); text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .btn-nav {
+      padding: 10px 22px;
+      background: var(--gold); color: var(--deep);
+      font-size: 12px; font-weight: 500; letter-spacing: 1.5px;
+      text-transform: uppercase; border: none; cursor: pointer;
+      text-decoration: none; display: inline-block;
+      transition: background 0.2s;
+    }
+    .btn-nav:hover { background: var(--goldLt); }
+
+    /* HERO */
+    .hero {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; padding: 80px 48px; gap: 60px;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--gold); border: 1px solid rgba(201,168,76,0.3);
+      padding: 6px 14px; margin-bottom: 28px;
+    }
+    .hero-tag::before { content: ''; width: 20px; height: 1px; background: var(--gold); }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(44px, 5.5vw, 76px); font-weight: 900;
+      line-height: 1.05; margin-bottom: 24px;
+    }
+    h1 em { font-style: italic; color: var(--gold); }
+    .hero-desc {
+      font-size: 17px; color: var(--muted); line-height: 1.75;
+      max-width: 440px; margin-bottom: 40px;
+    }
+    .btn-group { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary {
+      padding: 14px 32px; background: var(--gold); color: var(--deep);
+      font-size: 13px; font-weight: 500; letter-spacing: 1.5px;
+      text-transform: uppercase; border: none; cursor: pointer;
+      text-decoration: none; display: inline-block;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--goldLt); transform: translateY(-2px); }
+    .btn-outline {
+      padding: 14px 32px; background: transparent; color: var(--gold);
+      font-size: 13px; font-weight: 500; letter-spacing: 1.5px;
+      text-transform: uppercase; border: 1px solid rgba(201,168,76,0.4);
+      cursor: pointer; text-decoration: none; display: inline-block;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .btn-outline:hover { border-color: var(--gold); transform: translateY(-2px); }
+
+    /* MANDALA */
+    .hero-visual { display: flex; justify-content: center; align-items: center; }
+    .mandala { width: 380px; height: 380px; animation: slow-spin 60s linear infinite; }
+    @keyframes slow-spin { to { transform: rotate(360deg); } }
+
+    /* STATS */
+    .stats {
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid rgba(201,168,76,0.15);
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+      background: var(--surface);
+    }
+    .stat { padding: 40px 48px; border-right: 1px solid rgba(201,168,76,0.12); }
+    .stat:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 52px; font-weight: 700; color: var(--gold);
+      line-height: 1; margin-bottom: 8px;
+    }
+    .stat-label { font-size: 13px; color: var(--muted); letter-spacing: 1px; }
+
+    /* SECTIONS */
+    section { position: relative; z-index: 1; padding: 100px 48px; }
+    .section-eyebrow {
+      font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 16px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .section-eyebrow::after { content: ''; flex: 0 0 40px; height: 1px; background: var(--goldDm); }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(30px, 4vw, 50px); font-weight: 700;
+      line-height: 1.15; margin-bottom: 20px;
+    }
+
+    /* PROPOSITO */
+    .proposito-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center; margin-top: 60px;
+    }
+    .proposito-text p { font-size: 16px; color: var(--muted); line-height: 1.9; margin-bottom: 20px; }
+    .pillars { display: flex; flex-direction: column; gap: 2px; }
+    .pillar {
+      display: flex; align-items: flex-start; gap: 24px;
+      padding: 28px 32px; background: var(--surface);
+      border-left: 2px solid transparent; cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .pillar:hover, .pillar.active { border-left-color: var(--gold); background: var(--surf2); }
+    .pillar-icon {
+      width: 44px; height: 44px;
+      border: 1px solid rgba(201,168,76,0.25);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-size: 18px;
+    }
+    .pillar-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+    .pillar-desc { font-size: 14px; color: var(--muted); }
+
+    /* APOYO */
+    .apoyo-section { background: var(--surface); border-top: 1px solid rgba(201,168,76,0.1); border-bottom: 1px solid rgba(201,168,76,0.1); }
+    .apoyo-header { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; margin-bottom: 60px; }
+    .apoyo-header p { font-size: 16px; color: var(--muted); line-height: 1.8; }
+    .apoyo-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .apoyo-card { background: var(--surf2); padding: 40px 32px; border-top: 2px solid var(--surface); transition: border-color 0.2s; cursor: pointer; }
+    .apoyo-card:hover { border-top-color: var(--gold); }
+    .apoyo-icon { font-size: 28px; margin-bottom: 20px; display: block; }
+    .apoyo-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+    .apoyo-desc { font-size: 14px; color: var(--muted); line-height: 1.7; }
+    .apoyo-badge {
+      display: inline-block; margin-top: 16px;
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--goldDm); border: 1px solid rgba(201,168,76,0.15); padding: 4px 10px;
+    }
+
+    /* PITCH DECK DOWNLOAD */
+    .pitch-section { text-align: center; }
+    .pitch-card {
+      display: inline-flex; align-items: center; gap: 32px;
+      background: var(--surf2); border: 1px solid rgba(201,168,76,0.2);
+      padding: 40px 60px; margin-top: 48px;
+    }
+    .pitch-icon { font-size: 48px; opacity: 0.8; }
+    .pitch-info h3 { font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 6px; text-align: left; }
+    .pitch-info p { font-size: 14px; color: var(--muted); text-align: left; margin-bottom: 20px; }
+
+    /* MISION */
+    .mision-inner { max-width: 800px; margin: 0 auto; text-align: center; }
+    .mision-inner p { font-size: 20px; line-height: 1.8; color: var(--muted); margin-bottom: 48px; }
+    .mision-inner p strong { color: var(--text); font-weight: 500; }
+    .qhapaq {
+      display: flex; align-items: center; gap: 16px; justify-content: center;
+      font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--goldDm); margin: 0 0 40px;
+    }
+    .qhapaq::before, .qhapaq::after { content: ''; height: 1px; width: 60px; background: var(--goldDm); }
+    .cta-block {
+      background: var(--surf2); border: 1px solid rgba(201,168,76,0.15);
+      padding: 60px; display: flex; justify-content: space-between;
+      align-items: center; gap: 40px;
+    }
+    .cta-text h3 { font-family: 'Playfair Display', serif; font-size: 28px; margin-bottom: 10px; }
+    .cta-text p { font-size: 15px; color: var(--muted); }
+
+    /* FOOTER */
+    footer {
+      position: relative; z-index: 1;
+      padding: 40px 48px;
+      border-top: 1px solid rgba(201,168,76,0.1);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-logo { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--gold); letter-spacing: 2px; }
+    .footer-copy { font-size: 13px; color: var(--muted); }
+    .footer-tag { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--goldDm); }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 60px 24px; min-height: auto; gap: 40px; }
+      .hero-visual { order: -1; }
+      .mandala { width: 260px; height: 260px; }
+      .stats { grid-template-columns: 1fr; }
+      .stat { border-right: none; border-bottom: 1px solid rgba(201,168,76,0.12); padding: 28px 24px; }
+      section { padding: 64px 24px; }
+      .proposito-grid { grid-template-columns: 1fr; gap: 40px; }
+      .apoyo-header { grid-template-columns: 1fr; gap: 16px; }
+      .apoyo-cards { grid-template-columns: 1fr; }
+      .pitch-card { flex-direction: column; padding: 32px; text-align: center; }
+      .pitch-info h3, .pitch-info p { text-align: center; }
+      .cta-block { flex-direction: column; padding: 40px 28px; text-align: center; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 32px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">FuCoLla</a>
+  <ul class="nav-links">
+    <li><a href="#proposito">Propósito</a></li>
+    <li><a href="#apoyo">Apoyo</a></li>
+    <li><a href="#pitch">Pitch</a></li>
+    <li><a href="#mision">Misión</a></li>
+  </ul>
+  <a href="https://forms.gle/TU_FORM1" class="btn-nav">Participar</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding-top:60px; padding-bottom:60px;">
+  <div>
+    <div class="hero-tag">Inclusión digital · Identidad</div>
+    <h1>El <em>Camino</em><br>Digital<br>Comienza Aquí</h1>
+    <p class="hero-desc">
+      Inspirados en el Qhapaq Ñan, construimos puentes tecnológicos
+      hacia comunidades donde la distancia no debe ser una barrera.
+    </p>
+    <div class="btn-group">
+      <a href="https://forms.gle/TU_FORM1" class="btn-primary">Necesito acceso</a>
+      <a href="https://forms.gle/TU_FORM2" class="btn-outline">Quiero ayudar</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <svg class="mandala" viewBox="0 0 380 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="190" cy="190" r="180" stroke="#C9A84C" stroke-width="0.5" opacity="0.3"/>
+      <circle cx="190" cy="190" r="150" stroke="#C9A84C" stroke-width="0.5" opacity="0.2"/>
+      <circle cx="190" cy="190" r="120" stroke="#C9A84C" stroke-width="1" opacity="0.25"/>
+      <circle cx="190" cy="190" r="80"  stroke="#C9A84C" stroke-width="0.5" opacity="0.3"/>
+      <line x1="190" y1="10" x2="190" y2="370" stroke="#C9A84C" stroke-width="0.4" opacity="0.15"/>
+      <line x1="10" y1="190" x2="370" y2="190" stroke="#C9A84C" stroke-width="0.4" opacity="0.15"/>
+      <line x1="63" y1="63" x2="317" y2="317" stroke="#C9A84C" stroke-width="0.4" opacity="0.15"/>
+      <line x1="317" y1="63" x2="63" y2="317" stroke="#C9A84C" stroke-width="0.4" opacity="0.15"/>
+      <polygon points="190,40 340,190 190,340 40,190" stroke="#C9A84C" stroke-width="0.8" fill="none" opacity="0.25"/>
+      <polygon points="190,90 290,190 190,290 90,190" stroke="#C9A84C" stroke-width="0.8" fill="none" opacity="0.3"/>
+      <circle cx="190" cy="190" r="40" stroke="#C9A84C" stroke-width="1.5" opacity="0.5"/>
+      <circle cx="190" cy="190" r="20" fill="#C9A84C" opacity="0.12"/>
+      <circle cx="190" cy="190" r="8"  fill="#C9A84C" opacity="0.5"/>
+      <circle cx="190" cy="40"  r="4"  fill="#C9A84C" opacity="0.5"/>
+      <circle cx="340" cy="190" r="4"  fill="#C9A84C" opacity="0.5"/>
+      <circle cx="190" cy="340" r="4"  fill="#C9A84C" opacity="0.5"/>
+      <circle cx="40"  cy="190" r="4"  fill="#C9A84C" opacity="0.5"/>
+      <circle cx="83"  cy="83"  r="3"  fill="#C9A84C" opacity="0.35"/>
+      <circle cx="297" cy="83"  r="3"  fill="#C9A84C" opacity="0.35"/>
+      <circle cx="297" cy="297" r="3"  fill="#C9A84C" opacity="0.35"/>
+      <circle cx="83"  cy="297" r="3"  fill="#C9A84C" opacity="0.35"/>
+      <path id="ring-path" d="M190 30 A160 160 0 0 1 350 190 A160 160 0 0 1 190 350 A160 160 0 0 1 30 190 A160 160 0 0 1 190 30" fill="none"/>
+      <text font-size="10" letter-spacing="7" fill="#C9A84C" opacity="0.4" font-family="DM Sans,sans-serif">
+        <textPath href="#ring-path">FUCOLLA TECH · INCLUSIÓN DIGITAL · COMUNIDAD ·&nbsp;</textPath>
+      </text>
+    </svg>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><div class="stat-num">+50</div><div class="stat-label">Personas alcanzadas</div></div>
+  <div class="stat"><div class="stat-num">+10</div><div class="stat-label">Recursos disponibles</div></div>
+  <div class="stat"><div class="stat-num">+5</div><div class="stat-label">Aliados potenciales</div></div>
+</div>
+
+<!-- PROPOSITO -->
+<section id="proposito">
+  <div class="section-eyebrow">Nuestro propósito</div>
+  <div class="proposito-grid">
+    <div class="proposito-text">
+      <h2>Un puente<br><em>hacia lo digital</em></h2>
+      <p>Inspirados en el espíritu del Qhapaq Ñan — el gran camino andino que conectaba pueblos y culturas — construimos un puente digital para acercar oportunidades tecnológicas a comunidades que merecen acceso equitativo.</p>
+      <p>La tecnología no debe ser privilegio. Es un derecho que impulsamos con identidad, respeto y compromiso territorial.</p>
+    </div>
+    <div class="pillars">
+      <div class="pillar active">
+        <div class="pillar-icon">◈</div>
+        <div>
+          <div class="pillar-title">Acceso</div>
+          <div class="pillar-desc">Herramientas digitales accesibles y simples, diseñadas para quienes más lo necesitan.</div>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">◉</div>
+        <div>
+          <div class="pillar-title">Formación</div>
+          <div class="pillar-desc">Recursos educativos gratuitos y de calidad, adaptados a contextos rurales y comunitarios.</div>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">◎</div>
+        <div>
+          <div class="pillar-title">Comunidad</div>
+          <div class="pillar-desc">Red de apoyo, colaboración y crecimiento colectivo con identidad propia.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APOYO -->
+<section id="apoyo" class="apoyo-section">
+  <div class="apoyo-header">
+    <div>
+      <div class="section-eyebrow">Apoyar el proyecto</div>
+      <h2>Reducir la<br>brecha <em>juntos</em></h2>
+    </div>
+    <p>Podés ayudar a reducir la brecha digital donando recursos, tiempo o tecnología. Cada aporte, por pequeño que sea, construye el camino.</p>
+  </div>
+  <div class="apoyo-cards">
+    <div class="apoyo-card">
+      <span class="apoyo-icon">⬡</span>
+      <div class="apoyo-title">Donaciones</div>
+      <p class="apoyo-desc">Apoyá el proyecto con aportes económicos que financian infraestructura y recursos para las comunidades.</p>
+      <span class="apoyo-badge">Activo</span>
+    </div>
+    <div class="apoyo-card">
+      <span class="apoyo-icon">◈</span>
+      <div class="apoyo-title">Cripto</div>
+      <p class="apoyo-desc">Doná mediante billeteras digitales. Una forma moderna de contribuir a causas que importan.</p>
+      <span class="apoyo-badge">Próximamente</span>
+    </div>
+    <div class="apoyo-card">
+      <span class="apoyo-icon">◉</span>
+      <div class="apoyo-title">Recursos</div>
+      <p class="apoyo-desc">Compartí cursos, herramientas, conocimiento o equipamiento. El saber también es una donación.</p>
+      <span class="apoyo-badge">Activo</span>
+    </div>
+  </div>
+</section>
+
+<!-- PITCH DECK -->
+<section id="pitch" style="text-align:center;">
+  <div class="section-eyebrow" style="justify-content:center;">Material de presentación</div>
+  <h2>Conocé el <em>Proyecto</em></h2>
+  <p style="color:var(--muted); font-size:16px; margin-bottom:0; max-width:500px; margin:0 auto;">
+    Descargá el pitch deck completo con nuestra propuesta, impacto y próximos pasos.
+  </p>
+  <div style="display:flex; justify-content:center;">
+    <div class="pitch-card">
+      <div class="pitch-icon">📊</div>
+      <div class="pitch-info">
+        <h3>FuCoLla Tech – Pitch Deck 2026</h3>
+        <p>6 diapositivas · Problema · Solución · Diferencial · Estado actual</p>
+        <a href="FuCoLla_Tech_PitchDeck.pptx" download class="btn-primary">
+          Descargar Pitch Deck
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISION -->
+<section id="mision">
+  <div class="mision-inner">
+    <div class="section-eyebrow" style="justify-content:center;">Nuestra misión</div>
+    <h2>Tecnología con<br><em>identidad y propósito</em></h2>
+    <div class="qhapaq">Desde el NOA hacia el mundo digital</div>
+    <p>Reducir la brecha digital y crear acceso equitativo a la tecnología, especialmente en <strong>comunidades rurales y originarias</strong>. Porque la distancia geográfica no puede ser sinónimo de exclusión digital.</p>
+    <div class="cta-block">
+      <div class="cta-text">
+        <h3>¿Querés ser parte?</h3>
+        <p>Cada acción cuenta. Sumate hoy al camino digital.</p>
+      </div>
+      <div class="btn-group">
+        <a href="https://forms.gle/TU_FORM1" class="btn-primary">Necesito acceso</a>
+        <a href="https://forms.gle/TU_FORM2" class="btn-outline">Quiero ayudar</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">FuCoLla Tech</div>
+  <div class="footer-copy">© 2026 · Inclusión digital con identidad</div>
+  <div class="footer-tag">NOA · Argentina</div>
+</footer>
+
+<script>
+  document.querySelectorAll('.pillar').forEach(p => {
+    p.addEventListener('click', () => {
+      document.querySelectorAll('.pillar').forEach(x => x.classList.remove('active'));
+      p.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
