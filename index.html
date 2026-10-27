@@ -13,6 +13,7 @@
       --gold:    #C9A84C;
       --goldLt:  #E8C97A;
       --goldDm:  #7A6130;
+      --goldTx:  #B0904A;
       --deep:    #0D0A06;
       --surface: #1A1208;
       --surf2:   #231A0E;
@@ -76,6 +77,16 @@
       transition: background 0.2s;
     }
     .btn-nav:hover { background: var(--goldLt); }
+    .nav-toggle {
+      display: none; flex-direction: column; justify-content: center; gap: 5px;
+      width: 44px; height: 44px; padding: 0 11px;
+      background: transparent; border: 1px solid rgba(201,168,76,0.4); cursor: pointer;
+    }
+    .nav-toggle span { display: block; height: 2px; background: var(--gold); transition: transform 0.2s, opacity 0.2s; }
+    .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav-toggle:focus-visible, .nav-links a:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 
     /* HERO */
     .hero {
@@ -191,7 +202,7 @@
     .apoyo-badge {
       display: inline-block; margin-top: 16px;
       font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-      color: var(--goldDm); border: 1px solid rgba(201,168,76,0.15); padding: 4px 10px;
+      color: var(--goldTx); border: 1px solid rgba(201,168,76,0.15); padding: 4px 10px;
     }
 
     /* PITCH DECK DOWNLOAD */
@@ -212,7 +223,7 @@
     .qhapaq {
       display: flex; align-items: center; gap: 16px; justify-content: center;
       font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
-      color: var(--goldDm); margin: 0 0 40px;
+      color: var(--goldTx); margin: 0 0 40px;
     }
     .qhapaq::before, .qhapaq::after { content: ''; height: 1px; width: 60px; background: var(--goldDm); }
     .cta-block {
@@ -232,12 +243,21 @@
     }
     .footer-logo { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--gold); letter-spacing: 2px; }
     .footer-copy { font-size: 13px; color: var(--muted); }
-    .footer-tag { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--goldDm); }
+    .footer-tag { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--goldTx); }
 
     /* RESPONSIVE */
     @media (max-width: 900px) {
-      nav { padding: 16px 24px; }
-      .nav-links { display: none; }
+      nav { padding: 16px 24px; gap: 12px; }
+      .nav-logo { margin-right: auto; }
+      .nav-toggle { display: flex; }
+      .nav-links {
+        display: none; position: absolute; top: 100%; left: 0; right: 0;
+        flex-direction: column; gap: 0; padding: 8px 24px 16px;
+        background: rgba(13,10,6,0.98);
+        border-bottom: 1px solid rgba(201,168,76,0.15);
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { display: block; padding: 14px 0; font-size: 14px; border-bottom: 1px solid rgba(201,168,76,0.08); }
       .hero { grid-template-columns: 1fr; padding: 60px 24px; min-height: auto; gap: 40px; }
       .hero-visual { order: -1; }
       .mandala { width: 260px; height: 260px; }
@@ -258,14 +278,17 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">FuCoLla</a>
-  <ul class="nav-links">
+  <a href="#" class="nav-logo" aria-label="FuCoLla Tech, ir al inicio">FuCoLla</a>
+  <ul class="nav-links" id="nav-menu">
     <li><a href="#proposito">Propósito</a></li>
     <li><a href="#apoyo">Apoyo</a></li>
     <li><a href="#pitch">Pitch</a></li>
     <li><a href="#mision">Misión</a></li>
   </ul>
   <a href="https://forms.gle/TU_FORM1" class="btn-nav">Participar</a>
+  <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Abrir menú">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- HERO -->
@@ -436,6 +459,21 @@
 </footer>
 
 <script>
+  (function () {
+    var toggle = document.querySelector('.nav-toggle');
+    var menu = document.getElementById('nav-menu');
+    if (!toggle || !menu) return;
+    function setOpen(open) {
+      menu.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', open);
+      toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    }
+    toggle.addEventListener('click', function () { setOpen(!menu.classList.contains('open')); });
+    menu.addEventListener('click', function (e) { if (e.target.closest('a')) setOpen(false); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && menu.classList.contains('open')) { setOpen(false); toggle.focus(); }
+    });
+  })();
   document.querySelectorAll('.pillar').forEach(p => {
     p.addEventListener('click', () => {
       document.querySelectorAll('.pillar').forEach(x => x.classList.remove('active'));
